@@ -1,0 +1,43 @@
+﻿@model Hangman_App.Models.Account;
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - Hangman_App</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Hangman_App.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="h-100 d-flex align-items-center justify-content-center" style="min-height: 100vh;">
+        <form asp-controller="Access" asp-action="Register" method="post">
+            <h1 class="text-center my-3">Register</h1>
+            <div class="form-group my-3">
+                <label for="username">Username</label>
+                <input type="text" class="form-control" id="username" aria-describedby="usernameHelp" placeholder="Enter username" asp-for="Username">
+                <small id="emailHelp" class="form-text text-muted">Create a username. Pssst it doesn't have to be unique!</small>
+            </div>
+            <div class="form-group my-3">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Password" asp-for="Password">
+            </div>
+            <div class="form-check my-3">
+                <input type="checkbox" class="form-check-input" id="stayLoggedIn" asp-for="StayLoggedIn">
+                <label class="form-check-label" for="stayLoggedIn">Stay Logged In</label>
+            </div>
+            <div class="d-flex flex-column align-content-center justify-content-center my-3">
+                <button type="submit" class="d-block btn btn-primary">Login</button>
+                @if (ViewData["ErrorMessage"] != null)
+                {
+                    <span class="text-danger">@ViewData["ErrorMessage"]</span>
+                }
+            </div>
+        </form>
+    </div>
+</body>
+</html>
