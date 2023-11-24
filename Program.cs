@@ -1,4 +1,6 @@
+using Hangman_App.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(option => { option.LoginPath = "/Access/login"; option.ExpireTimeSpan = TimeSpan.FromMinutes(20); });
+
+builder.Services.AddDbContext<AppDbContext>(opts =>
+{
+    opts.UseNpgsql(builder.Configuration.GetConnectionString("hangman_db"));
+});
 
 var app = builder.Build();
 

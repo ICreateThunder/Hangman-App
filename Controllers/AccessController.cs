@@ -17,9 +17,11 @@ namespace Hangman_App.Controllers
             _logger = logger;
         }
 
+        #region Login
         [HttpGet]
         public IActionResult Login()
         {
+            // Redirect to main menu if already logged in
             ClaimsPrincipal claim = HttpContext.User;
             if (claim != null)
                 if (claim.Identity.IsAuthenticated)
@@ -38,11 +40,36 @@ namespace Hangman_App.Controllers
                 ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 AuthenticationProperties properties = new AuthenticationProperties() { AllowRefresh = false, IsPersistent = account.StayLoggedIn };
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), properties);
+                // TODO: Log message that user has logged in successfully
                 return RedirectToAction("Menu", "Controller");
             }
 
             ViewData["ErrorMessage"] = "Failed to login, please try again";
             return View();
         }
+        #endregion
+
+        #region Registration
+        [HttpGet]
+        public IActionResult Register()
+        {
+            // Redirect to main menu if already logged in
+            ClaimsPrincipal claim = HttpContext.User;
+            if (claim != null)
+                if (claim.Identity.IsAuthenticated)
+                    return RedirectToAction("Menu", "Game");
+
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Register(Account account)
+        {
+            // TODO: Add user to database
+
+            return View();
+        }
+
+        #endregion
     }
 }
