@@ -101,6 +101,8 @@ namespace Hangman_App.Controllers
 
                         _dbContext.Accounts.Add(a);
                         _dbContext.SaveChanges();
+
+                        return RedirectToAction("Login", "Access");
                     }
 
             return View();
